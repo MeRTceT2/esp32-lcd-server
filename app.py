@@ -4,7 +4,7 @@ app = Flask(__name__)
 last_message = "Hazir"
 
 @app.route('/')
-def get_message():
+def home():
     return f"""
     <h2>LCD Ekran Mesajı:</h2>
     <p>{last_message}</p>
@@ -15,7 +15,7 @@ def get_message():
     """
 
 @app.route('/send', methods=['POST'])
-def post_message():
+def send():
     global last_message
     if request.form.get('message'):
         last_message = request.form.get('message')
@@ -23,6 +23,9 @@ def post_message():
         last_message = request.data.decode('utf-8')
     return "OK"
 
-@app.route('/text')
-def text_only():
+@app.route('/text', methods=['GET'])
+def text():
     return last_message
+
+if __name__ == '__main__':
+    app.run()
