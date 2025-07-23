@@ -17,9 +17,12 @@ def get_message():
 @app.route('/send', methods=['POST'])
 def post_message():
     global last_message
-    # Hem formdan hem ESP'den gelen veriyi destekle
     if request.form.get('message'):
         last_message = request.form.get('message')
     else:
         last_message = request.data.decode('utf-8')
     return "OK"
+
+@app.route('/text')
+def text_only():
+    return last_message
